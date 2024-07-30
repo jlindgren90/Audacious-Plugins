@@ -137,10 +137,10 @@ void add_g_variant_int64 (const char * key_str, int64_t value_int,
 }
 
 void add_g_variant_arr_str (const char * key_str,
-                           const Index<String> & value_arr,
+                           ArrayRef<String> value_arr,
                            Index<GVariant *> & elems)
 {
-    if (value_arr.len () == 0)
+    if (value_arr.len == 0)
         return;
 
     GVariant * key = g_variant_new_string (key_str);
@@ -204,24 +204,19 @@ static void update_metadata (void * data, GObject * object)
     if (meta.title)
         add_g_variant_str ("xesam:title", meta.title, elems);
     if (meta.artist)
-        add_g_variant_arr_str ("xesam:artist",
-                              str_list_to_index (meta.artist, ""), elems);
+        add_g_variant_arr_str ("xesam:artist", {{meta.artist}}, elems);
     if (meta.album)
         add_g_variant_str ("xesam:album", meta.album, elems);
     if (meta.album_artist)
-        add_g_variant_arr_str ("xesam:albumArtist",
-                              str_list_to_index (meta.album_artist, ""), elems);
+        add_g_variant_arr_str ("xesam:albumArtist", {{meta.album_artist}}, elems);
     if (meta.comment)
-        add_g_variant_arr_str ("xesam:comment",
-                              str_list_to_index (meta.comment, ""), elems);
+        add_g_variant_arr_str ("xesam:comment", {{meta.comment}}, elems);
     if (meta.genre)
-        add_g_variant_arr_str ("xesam:genre", str_list_to_index (meta.genre, ""),
-                              elems);
+        add_g_variant_arr_str ("xesam:genre", {{meta.genre}}, elems);
     if (meta.rec_date)
         add_g_variant_str ("xesam:contentCreated", meta.rec_date, elems);
     if (meta.composer)
-        add_g_variant_arr_str ("xesam:composer",
-                              str_list_to_index (meta.composer, ""), elems);
+        add_g_variant_arr_str ("xesam:composer", {{meta.composer}}, elems);
     if (meta.lyrics)
         add_g_variant_str ("xesam:asText", meta.lyrics, elems);
     if (meta.file)
